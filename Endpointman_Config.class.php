@@ -1654,14 +1654,16 @@ if ($this->configmod->get('debug')) echo format_txt(_("---Inserting Model %_NAME
     									$var_nam = "loop|" . str_replace("\$", "", $name[0]) . "_" . $i;
     									foreach ($item['data']['item'] as $item_loop) {
     										if ($item_loop['type'] != 'break') {
-    											$z_tmp = explode("_", $item_loop['variable']);
-    											$z = $z_tmp[1];
-    											$items_loop[$var_nam][$z] = $item_loop;
-    											$items_loop[$var_nam][$z]['description'] = str_replace('{$count}', $i, $items_loop[$var_nam][$z]['description']);
-    											$items_loop[$var_nam][$z]['variable'] = str_replace('_', '_' . $i . '_', $items_loop[$var_nam][$z]['variable']);
-    											$items_loop[$var_nam][$z]['default_value'] = isset($items_loop[$var_nam][$z]['default_value']) ? $items_loop[$var_nam][$z]['default_value'] : '';
-    											$items_loop[$var_nam][$z]['loop'] = TRUE;
-    											$items_loop[$var_nam][$z]['loop_count'] = $i;
+											if (!empty($item_loop['variable'])){
+												$z_tmp = explode("_", $item_loop['variable']);
+												$z = $z_tmp[1];
+												$items_loop[$var_nam][$z] = $item_loop;
+												$items_loop[$var_nam][$z]['description'] = str_replace('{$count}', $i, $items_loop[$var_nam][$z]['description']);
+												$items_loop[$var_nam][$z]['variable'] = str_replace('_', '_' . $i . '_', $items_loop[$var_nam][$z]['variable']);
+												$items_loop[$var_nam][$z]['default_value'] = isset($items_loop[$var_nam][$z]['default_value']) ? $items_loop[$var_nam][$z]['default_value'] : '';
+												$items_loop[$var_nam][$z]['loop'] = TRUE;
+												$items_loop[$var_nam][$z]['loop_count'] = $i;
+											}
     										} elseif ($item_loop['type'] == 'break') {
     											$items_loop[$var_nam]['break_' . $break_count]['type'] = 'break';
     											$break_count++;
